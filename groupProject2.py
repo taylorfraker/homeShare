@@ -8,8 +8,8 @@ Python ver: 3.6.6
 
 """
 
-import nltk
-from nltk.corpus import gutenberg
+#import nltk
+#from nltk.corpus import gutenberg
 
 
 def author_name(file_id):
@@ -45,11 +45,32 @@ def Hapax_Legomana_Ratio(words):
     
     wordlist = sorted(words)
     singles = []
-    
+    '''
+    From Brandon :)
+    The for loop below, on a list with n elements,
+    will go from index 0 to index n-2 (instead of n-1).
+    It makes sense since you compare each element of the list with the element before and after,
+    and if you were to compare the last element (index n-1) to the one after it you would get an
+    IndexError. But you still need to account for the last element somehow. There are two
+    ways I chose to address this issue, one is within the loop and one is outside of it.
+    I put the outside way within this docstring.
+
     for i in range(len(wordlist) - 1):
         if wordlist[i] != wordlist[i + 1] and wordlist[i] != wordlist[i - 1]:
             singles.append(wordlist[i])
-
+    if wordlist[len(wordlist) - 1] != wordlist[len(wordlist) - 2]:
+        singles.append(wordlist[len(wordlist) - 1])
+    '''
+    
+    for i in range(len(wordlist)):
+        if i < (len(wordlist) - 1):
+            if wordlist[i] != wordlist[i + 1] and wordlist[i] != wordlist[i - 1]:
+                singles.append(wordlist[i])
+        else:
+            if wordlist[len(wordlist) - 1] != wordlist[len(wordlist) - 2]:
+                singles.append(wordlist[len(wordlist) - 1])
+     
+    
     return len(singles)/len(wordlist)
 
 
@@ -158,8 +179,9 @@ print(author_name('austen-emma.txt'))
 
 if __name__ == '__main__':
 
-    print(Author_Sig())
-
+    #print(Author_Sig())
+    lst = ['a', 'a', 'b', 'a', 'b', 'b', 'c', 'c', 'd'] #test list for HLR, can delete -BE
+    print(Hapax_Legomana_Ratio(lst))
 
 """
     print('running main')
